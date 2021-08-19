@@ -23,9 +23,5 @@ class AdminSiteTests(TestCase):
         url = reverse('admin:core_user_changelist')
         res = self.client.get(url)
 
-        print('HELLO')
-        print(res.content)
-
-        self.assertEqual(res.status_code, 302)
-        # self.assertContains(res, self.user.name)
-        # self.assertContains(res, self.user.email)
+        self.assertContains(res, self.user.name)
+        self.assertContains(res, self.user.email)
