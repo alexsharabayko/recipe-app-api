@@ -11,7 +11,7 @@ ME_URL = reverse('user:me')
 
 
 def create_user(**params):
-    get_user_model().objects.create_user(**params)
+    return get_user_model().objects.create_user(**params)
 
 
 class PublicUserApiTests(TestCase):
@@ -128,8 +128,8 @@ class PrivateUserApiTests(TestCase):
     def setUp(self):
         self.user = create_user(
             email='alex@sharky.com',
-            password='testpass',
-            name='name'
+            password='testpass111',
+            name='fname',
         )
         self.client = APIClient()
         self.client.force_authenticate(user=self.user)
@@ -156,8 +156,7 @@ class PrivateUserApiTests(TestCase):
             'name': 'new name',
             'password': 'testpass111',
         }
-
-        res = self.client.patch(TOKEN_URL, payload)
+        res = self.client.patch(ME_URL, payload)
 
         self.user.refresh_from_db()
 
